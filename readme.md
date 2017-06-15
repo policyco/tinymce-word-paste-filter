@@ -1,5 +1,7 @@
 ## TinyMCE Word Paste Filter (standalone)
 
+[![npm version](https://badge.fury.io/js/tinymce-word-paste-filter.svg)](https://badge.fury.io/js/tinymce-word-paste-filter) [![Build Status](https://travis-ci.org/jasonphillips/tinymce-word-paste-filter.svg?branch=master)](https://travis-ci.org/jasonphillips/tinymce-word-paste-filter)
+
 ### What?
 
 This project provides a standalone version of the filter function used by TinyMCE to clean up pasted MS Word content. 
