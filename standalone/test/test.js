@@ -1,0 +1,27 @@
+const assert = require('assert');
+const {JSDOM} = require('jsdom');
+
+const wordInput = require('./fixtures/wordInput');
+const cleanedOutput = require('./fixtures/cleanedOutput');
+
+const dom = new JSDOM();
+const {document, navigator, URL} = dom.window;
+global.document = document;
+global.navigator = navigator;
+global.URL = URL;
+global.window = dom.window;
+
+const filterWord = require('../');
+
+describe('fitlers MS Word content', function () {
+    it('transforms lists; cleans up styles', function () {
+        const result = filterWord(wordInput);
+        assert.equal(result, cleanedOutput);
+    });
+
+    it('leaves non-Word content untouched', function () {
+        const content = `<p style="font-weight:bold">hello world</p>`;
+        const result = filterWord(content);
+        assert.equal(result, content);
+    });
+});

@@ -1,22 +1,21 @@
 {
-  "name": "tinymce",
-  "version": "4.6.4",
+  "name": "tinymce-word-paste-filter",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tinymce/tinymce.git"
+    "url": "https://github.com/jasonphillips/tinymce.git"
   },
-  "description": "TinyMCE rich text editor",
-  "author": "Johan Sörlin <spocke@moxiecode.com>",
-  "bugs": {
-    "url": "http://www.tinymce.com/develop/bugtracker.php"
-  },
-  "private": true,
+  "description": "Standalone filter for pasted MS Word HTML content; forked from TinyMCE",
+  "author": "Jason Phillips",
+  "private": false,
   "engines": {
     "node": ">=0.10.26"
   },
   "scripts": {
-    "test": "grunt bedrock-manual"
+    "test": "mocha standalone/test/test.js",
+    "build": "grunt build --gruntfile GruntFileWordClean.js"
   },
+  "main": "standalone/index.js",
   "dependencies": {
     "@ephox/katamari": "^1.1.0",
     "@ephox/sugar": "^3.1.0"
@@ -34,8 +33,11 @@
     "grunt-contrib-watch": "~1.0.0",
     "grunt-eslint": "~19.0.0",
     "grunt-nuget-pack": "^0.0.6",
+    "grunt-requirejs": "^0.4.2",
     "jquery": "~1.11.3",
+    "jsdom": "^11.0.0",
     "load-grunt-tasks": "~3.5.2",
+    "mocha": "^3.4.2",
     "moxie-zip": "~0.0.3"
   }
 }
