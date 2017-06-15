@@ -1,70 +1,35 @@
-TinyMCE - The JavaScript Rich Text editor
-==========================================
+## TinyMCE Word Paste Filter (standalone)
 
-Building TinyMCE
------------------
-Install [Node.js](https://nodejs.org/en/) on your system.
-Clone this repository on your system
-```
-$ git clone https://github.com/tinymce/tinymce.git
-```
-Open a console and go to the project directory.
-```
-$ cd tinymce/
-```
-Install `grunt` command line tool globally.
-```
-$ npm i -g grunt-cli
-```
-Install all package dependencies.
-```
-$ npm install
-```
-Now, build TinyMCE by using `grunt`.
-```
-$ grunt
+### What?
+
+This project provides a standalone version of the filter function used by TinyMCE to clean up pasted MS Word content. 
+
+### Why?
+
+TinyMCE has one of the best implementations of Word cleanup around; they have tackled pernicious problems like restoring list items to actual lists when these arrive as `<p>` tags with a lot of odd styles and bullet characters. However, TinyMCE is no tiny library, and does not export that capability by itself. 
+
+This repo will remain an up-to-date fork of TinyMCE that builds only the Word Filter function (and its internal dependencies) into a standalone library much smaller (~50k) than the full TinyMCE, published on npm as `tinymce-word-paste-filter` for easy incorporation into other projects.
+
+### How?
+
+```js
+import wordFilter from 'tinymce-word-paste-filter';
+
+// if you have incoming pasted Word data in your program...
+const awfulWordHTML = '...'; // content here
+
+// clean it up in one step
+const cleaned = wordFilter(awfulWordHTML); 
 ```
 
-Build tasks
-------------
-`grunt`
-Lints, minifies, unit tests and creates release packages for TinyMCE.
+Please note that this is intended to be bundled into browser applications; if running in a node environment for some reason, you'll need to have browser / dom globals (document, navigator, etc) available.
 
-`grunt test`
-Runs all qunit tests on PhantomJS.
+See the brief test under `./standalone/test/` and its fixtures.
 
-`grunt --help`
-Displays the various build tasks.
+### Building from source, testing
 
-Bundle themes and plugins into a single file
----------------------------------------------
-`grunt bundle --themes=modern --plugins=table,paste`
-Minifies the core, adds the modern theme and adds the table and paste plugin into tinymce.min.js.
-
-Contributing to the TinyMCE project
-------------------------------------
-TinyMCE is an open source software project and we encourage developers to contribute patches and code to be included in the main package of TinyMCE.
-
-__Basic Rules__
-
-* Contributed code will be licensed under the LGPL license but not limited to LGPL.
-* Copyright notices will be changed to Ephox Corporation, contributors will get credit for their work.
-* All third party code will be reviewed, tested and possibly modified before being released.
-* All contributors will have to have signed the Contributor License Agreement.
-
-These basic rules ensures that the contributed code remains open source and under the LGPL license.
-
-__How to Contribute to the Code__
-
-The TinyMCE source code is [hosted on Github](https://github.com/tinymce/tinymce). Through Github you can submit pull requests and log new bugs and feature requests.
-
-When you submit a pull request, you will get a notice about signing the __Contributors License Agreement (CLA)__.
-You should have a __valid email address on your GitHub account__, and you will be sent a key to verify your identity and digitally sign the agreement.
-
-After you signed your pull request will automatically be ready for review & merge.
-
-__How to Contribute to the Docs__
-
-Docs are hosted on Github in the [tinymce-docs](https://github.com/tinymce/tinymce-docs) repo.
-
-[How to contribute](https://www.tinymce.com/docs/advanced/contributing-docs/) to the docs, including a style guide, can be found on the TinyMCE website.
+```shell
+npm install
+npm run build
+npm run test
+```
