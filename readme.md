@@ -28,6 +28,14 @@ Please note that this is intended to be bundled into browser applications; if ru
 
 See the brief test under `./standalone/test/` and its fixtures.
 
+### Installation
+
+The easiest way to use tinymce-word-paste-filter is to install it from npm and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
+
+```shell
+npm install tinymce-word-paste-filter --save
+```
+
 ### Building from source, testing
 
 ```shell
