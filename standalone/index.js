@@ -1,6 +1,5 @@
-const WF = require('./WordFilter.js');
-const WordFilter = WF.WordFilter;
-const Styles = WF.Styles;
+const WordFilter = require('./WordFilter.js');
+const Styles = require('./Styles.js');
 
 StylesTool = Styles();
 
@@ -17,14 +16,14 @@ const editor = {
 };
 
 /*
-    allow filter to be attached to editor object, 
-    by mocking the 'on' binding
+    also mock the param function required by editor
 */
-editor.on = function (name, func) { this[name] = func };
-WordFilter(editor);
+editor.getParam = function (key, defaultValue) { return defaultValue; }
 
 module.exports = function CleanWordHTML (content) {
-    const container = {content: content};
-    editor.BeforePastePreProcess(container);
-    return container.content;
+    if (!WordFilter.isWordContent(content)) {
+        return content;
+    }
+
+    return WordFilter.preProcess(editor, content);
 }

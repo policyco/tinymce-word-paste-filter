@@ -1,5 +1,2 @@
-    return {
-        WordFilter: require('tinymce.plugins.paste.core.WordFilter'),
-        Styles: require('tinymce.core.html.Styles'),
-    };
+    return tinymceWordPasteFilter;
 }));

@@ -40,10 +40,13 @@
     "grunt-contrib-watch": "~1.0.0",
     "grunt-nuget-pack": "^0.0.6",
     "grunt-requirejs": "^0.4.2",
+    "grunt-rollup": "^8.2.0",
+    "grunt-shell": "^2.1.0",
     "jquery": "~1.11.3",
     "jsdom": "^11.0.0",
     "load-grunt-tasks": "~3.5.2",
     "mocha": "^3.4.2",
-    "moxie-zip": "~0.0.3"
+    "moxie-zip": "~0.0.3",
+    "typescript": "^2.6.2"
   }
 }

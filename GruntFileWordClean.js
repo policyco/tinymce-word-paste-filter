@@ -1,52 +1,92 @@
+const fs = require('fs');
+const start = fs.readFileSync('./standalone/wrappers/wrap.start');
+const end = fs.readFileSync('./standalone/wrappers/wrap.end');
+const stylesEnd = fs.readFileSync('./standalone/wrappers/wrap.styles.end');
+const swag = require('@ephox/swag');
+
 /*global module:false*/
 module.exports = function(grunt) {
 
-    // replace this line with
-    // grunt.loadNpmTasks("grunt-requirejs");
-    // if you use this example standalone
     grunt.loadNpmTasks("grunt-requirejs");
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
 
-        requirejs: {
-          compile: {
-            options: {
-              build: true,
-              almond: true,
-              baseUrl: 'src',
-              findNestedDependencies: true,
-              paths: {
-                'tinymce.core.util.Tools': 'core/src/main/js/util/Tools',
-                'tinymce.core.util.Arr': 'core/src/main/js/util/Arr',
-                'tinymce.core.Env': 'core/src/main/js/Env',
-                'tinymce.core.html': 'core/src/main/js/html',
-                'tinymce.core.html.DomParser': 'core/src/main/js/html/DomParser',
-                'tinymce.core.html.Node': 'core/src/main/js/html/Node',
-                'tinymce.core.html.Schema': 'core/src/main/js/html/Schema',
-                'tinymce.core.html.SaxParser': 'core/src/main/js/html/SaxParser',
-                'tinymce.core.html.Entities': 'core/src/main/js/html/Entities',
-                'tinymce.core.html.Serializer': 'core/src/main/js/html/Serializer',
-                'tinymce.core.html.Writer': 'core/src/main/js/html/Writer',
-                'tinymce.core.html.Styles': 'core/src/main/js/html/Styles',
-                'tinymce.plugins.paste.core': 'plugins/paste/src/main/js/core',
-                'tinymce.plugins.paste.core.Utils': 'plugins/paste/src/main/js/core/Utils',
-              },
-              wrap: {
-                  startFile: 'standalone/wrappers/wrap.start',
-                  endFile: 'standalone/wrappers/wrap.end'
-              },
-              name: 'plugins/paste/src/main/js/core/WordFilter',
-              include: [
-                'tinymce.plugins.paste.core.WordFilter',
-                'tinymce.core.html.Styles',
-              ],
-              //exclude: ['jquery', 'underscore'],
-              out: 'standalone/WordFilter.js',
-            }
+      shell: {
+        tsc: { command: 'node ./node_modules/typescript/bin/tsc' }
+      },
+
+      uglify: {
+        options: {
+          compress: {
+            dead_code: true
+          }
+        },
+        my_target: {
+          files: {
+            'standalone/WordFilter.min.js': ['standalone/WordFilter.js'],
+            'standalone/Styles.min.js': ['standalone/Styles.js'],
           }
         }
+      },
 
+      rollup: {
+        core: {
+          options: {
+            treeshake: true,
+            moduleName: 'tinymceWordPasteFilter',
+            format: 'iife',
+            banner: start,
+            footer: end,
+            plugins: [
+              swag.nodeResolve({
+                basedir: __dirname,
+                prefixes: {
+                  'tinymce/core': 'lib/core/main/ts',
+                }
+              }),
+              swag.remapImports()
+            ]
+          },
+          files:[
+            {
+              src: 'lib/plugins/paste/main/ts/core/WordFilter.js',
+              dest: 'standalone/WordFilter.js'
+            }
+          ]
+        },
+        styles: {
+          options: {
+            treeshake: true,
+            moduleName: 'tinyMceStyleParser',
+            format: 'iife',
+            banner: start,
+            footer: stylesEnd,
+            plugins: [
+              swag.nodeResolve({
+                basedir: __dirname,
+                prefixes: {
+                  'tinymce/core': 'lib/core/main/ts'
+                }
+              }),
+              swag.remapImports()
+            ]
+          },
+          files:[
+            {
+              src: 'lib/core/main/ts/html/Styles.js',
+              dest: 'standalone/Styles.js'
+            }
+          ]
+        }
+      },
     });
 
-    grunt.registerTask('build', 'requirejs');
+    grunt.registerTask(
+      'build', [
+        'shell:tsc', 
+        'rollup', 
+        // 'uglify' - won't uglify this by default now; let dependent projects handle it 
+      ]
+    );
 };
