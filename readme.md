@@ -10,7 +10,7 @@ This project provides a standalone version of the filter function used by TinyMC
 
 TinyMCE has one of the best implementations of Word cleanup around; they have tackled pernicious problems like restoring list items to actual lists when these arrive as `<p>` tags with a lot of odd styles and bullet characters. However, TinyMCE is no tiny library, and does not export that capability by itself. 
 
-This repo will remain an up-to-date fork of TinyMCE that builds only the Word Filter function (and its internal dependencies) into a standalone library much smaller (should contribute ~80k if you minify your build) than the full TinyMCE (>500k addition to your project, and with the internal Word clean function not exposed), published on npm as `tinymce-word-paste-filter` for easy incorporation into other projects.
+This repo will remain an up-to-date fork of TinyMCE that builds only the Word Filter function (and its internal dependencies) into a standalone library much smaller (contributes [~50k](https://bundlephobia.com/result?p=tinymce-word-paste-filter@0.6.1) if you minify your build) than the full TinyMCE (contribrutes at minimum [>300k](https://bundlephobia.com/result?p=tinymce@4.7.5) to your project -- with the internal Word clean function not exposed), published on npm as `tinymce-word-paste-filter` for easy incorporation into other projects.
 
 ### How?
 
