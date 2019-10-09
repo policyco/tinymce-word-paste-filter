@@ -1,5 +1,5 @@
 {
-  "name": "tinymce-word-paste-filter",
+  "name": "@policyco/tinymce-word-paste-filter",
   "version": "0.6.1",
   "repository": {
     "type": "git",
