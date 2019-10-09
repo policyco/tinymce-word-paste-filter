@@ -1,6 +1,6 @@
 {
   "name": "@policyco/tinymce-word-paste-filter",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/jasonphillips/tinymce.git"
