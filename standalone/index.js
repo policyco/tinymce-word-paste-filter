@@ -1,7 +1,7 @@
 const WordFilter = require('./WordFilter.js');
 const Styles = require('./Styles.js');
 
-StylesTool = Styles();
+const StylesTool = Styles();
 
 /*
     create a mock editor object, expected by plugin;
